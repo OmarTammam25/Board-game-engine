@@ -1,10 +1,16 @@
 package Sudoku
-import java.awt.{BasicStroke, BorderLayout, Color, Font, Graphics, Graphics2D, RenderingHints}
+import org.jpl7.Query
+
+import java.awt.{BasicStroke, BorderLayout, Color, Font, Graphics, Graphics2D, GridLayout, RenderingHints}
 import javax.swing.{JFrame, JPanel}
 import scala.util.Random
 import scala.collection.mutable.Set
 import scala.swing.{Dimension, GridPanel, Label}
 import javax.swing.SwingUtilities
+import javax.swing.*
+import scala.swing._
+//import java.awt._
+
 object GameEngine {
 
   def isValidMoveSudoku(board: Array[Array[(Int,Boolean)]], row: Int, col: Int, num: Int): Boolean = {
@@ -17,6 +23,7 @@ object GameEngine {
     }
   }
 
+<<<<<<< HEAD
 
   def fillRandom(): Array[Array[(Int,Boolean)]] = {
 
@@ -66,6 +73,20 @@ object GameEngine {
         }
 
         current()
+=======
+  def fillRandom():  Array[Array[Int]] = {
+    val board = Array.ofDim[Int](9, 9)
+    val random = new Random()
+    var count = 0
+    while (count < 17) {
+      val row = random.nextInt(9)
+      val col = random.nextInt(9)
+      if (board(row)(col) == 0) {
+        var value = random.nextInt(9) + 1;
+        while(! isValidMoveSudoku(board, row, col, value))
+          value = random.nextInt(9) + 1
+        board(row)(col) = value
+>>>>>>> c8ee8b3 (Fix GUI not loading)
       }
       else if (y < 8) fill(x, y + 1) else if (x < 8) fill(x + 1, 0) else true
     }
@@ -76,13 +97,12 @@ object GameEngine {
   }
 
   def Sudokucontroller(move: String, state: (Array[Array[(Int,Boolean)]], Int)): (Boolean, Array[Array[(Int,Boolean)]]) = {
+    if(move.equals("solve"))
+      return (true, solveSodoku(state(0)))
 
     val col = move(0).toInt -'a'.toInt
     val row = 9-(move(1).toInt -'0'.toInt)
     val value = move(3).toInt -'0'.toInt
-    println("row = " + row)
-    println("col = "+ col)
-    println(value)
 
     if (isValidMoveSudoku(state(0), row, col, value)) {
       //val newBoard = state._1.updated(row, state._1(row).updated(col, value))
@@ -94,9 +114,72 @@ object GameEngine {
     }
   }
 
+  def solveSodoku(state: (Array[Array[(Int,Boolean)]])): (Array[Array[(Int,Boolean)]]) = {
+    val prologFile = new Query("consult('C:/Omar/Projects/Paradigms/Board-game-engine/Scala-engine/src/main/prolog/sudokuSolver.pl')")
+    if(!prologFile.hasSolution){
+      println("prolog file not found")
+      return state
+    }
 
+    val prologString = convertToPrologFormat(state)
+    val query = prologString + ", sudoku(Row), maplist(label, Row)."
+    val prologResult = Query(query)
+    if(!prologResult.hasSolution) {
+      println("Can't find solution")
+      Dialog.showMessage(null, "Can't find a solution", "Alert", Dialog.Message.Error)
+      return state
+    }
 
+    println("Solution found!")
+    val solution = prologResult.oneSolution().get("Row").toString;
+    updateBoardWithSolution(state, solution)
+  }
+  def convertToPrologFormat(board: (Array[Array[(Int,Boolean)]])): String = {
+    var s = "Row = [";
+    board.foreach(row => {
+      s = s + "["
+      row.zipWithIndex.foreach {
+        case (elem, idx) =>
+          s = changeSudokuBoardNumbersToStrings(idx, elem(0), s)
+      }
+    })
 
+    s = s.substring(0, s.size - 1) + ']'
+    s
+  }
+
+  def updateBoardWithSolution(state: Array[Array[(Int, Boolean)]], inputString: String): Array[Array[(Int, Boolean)]] = {
+    val cleanString = inputString.replace("[", "")
+      .replace("]", "").replace(" ", "")
+    val rows = cleanString.split(",")
+
+    val arrays = rows.grouped(9).toArray.map(_.map(_.toInt))
+
+    val tupleArray = Array.ofDim[(Int, Boolean)](arrays.length, arrays(0).length)
+
+    for (i <- arrays.indices; j <- arrays(i).indices) {
+      tupleArray(i)(j) = (arrays(i)(j), state(i)(j)(1))
+    }
+    tupleArray
+  }
+
+  def changeSudokuBoardNumbersToStrings(index:Int, elem: Int, s: String) = {
+    var t = s
+    if(index == 8){
+      if (1 to 9 contains elem) {
+        t = t + elem
+      } else{
+        t = t + "_"
+      }
+        t = t + "],"
+    }else{
+      if (1 to 9 contains elem)
+        t = t + elem + ", "
+      else
+        t = t + "_, "
+    }
+      t
+  }
 
   def Sudokudrawer(board: Array[Array[Int]]): Unit = {
     // Draw the Sudoku board
@@ -127,16 +210,14 @@ object GameEngine {
 
     println("  +-------+-------+-------+")
   }
-
-
-
   ///////////
-
-
-  import javax.swing._
-  import java.awt._
-
+<<<<<<< HEAD
+  
   def drawBoardGUI_Sudoku(board: Array[Array[(Int, Boolean)]]): Unit = {
+=======
+  def drawBoardGUI_Sudoku(board: Array[Array[Int]]): Unit = {
+    Sudokudrawer(board)
+>>>>>>> c8ee8b3 (Fix GUI not loading)
     val frame = new JFrame
     val panel = new JPanel(new BorderLayout()) {
       override def paintComponent(g: Graphics): Unit = {

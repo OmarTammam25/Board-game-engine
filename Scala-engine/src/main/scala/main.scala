@@ -15,9 +15,14 @@ import Chess._
 import Checkers._
 import Tic_Tac_Toe._
 import Queens._
+import org.jpl7._
 
 @main
 def main(): Unit = {
+<<<<<<< HEAD
+  val test = new Query("")
+=======
+>>>>>>> c8ee8b3 (Fix GUI not loading)
   val mainMenu = createMainMenu()
 }
 
@@ -68,7 +73,11 @@ def startGame(game: String): Unit = {
     case "Checkers" => abstractEngine[String](2, checkersController, drawGUICheckers, initializeCheckersBoard)
     case "Tic-Tac-Toe" => abstractEngine[Char](2, TicTacToeController, TicTacToeDrawer, initializeTicTacToeBoard)
     case "8 Queens" => abstractEngine[Char](1, EQueensController, drawGUIEQueen, initializeEQueenBoard)
+<<<<<<< HEAD
     case "Sudoku" => abstractEngine[(Int,Boolean)](1, Sudokucontroller, drawBoardGUI_Sudoku, fillRandom)
+=======
+    case "Sudoku" => abstractEngine[Int](1, Sudokucontroller, drawBoardGUI_Sudoku, fillRandom)
+>>>>>>> c8ee8b3 (Fix GUI not loading)
     case "Connect 4" => abstractEngine[Int](2,Connect4_controller,drawBoardGUI_Connect4,fill)
     case "Chess" => abstractEngine[(Colors,Pieces)](2, chessController, drawChessBoardWithPieces, initChessBoard)
 }

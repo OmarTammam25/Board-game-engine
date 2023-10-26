@@ -1,13 +1,20 @@
 package Queens
-import Checkers.changeLettersToIndex
+
+import Chess.changeLettersToIndex
+import org.jpl7.Query
 
 import java.awt.{Color, Graphics2D, Image, RenderingHints, Toolkit}
 import java.awt.image.BufferedImage
 import java.io.File
 import javax.imageio.ImageIO
 import scala.swing.{BorderPanel, Dimension, GridPanel, Label, MainFrame}
+import scala.swing._
+
 def EQueensController(move: String, state: (Array[Array[Char]], Int)): (Boolean, Array[Array[Char]]) =
 {
+  if(move.equals("solve"))
+    return (true, solveEQueens(state(0)))
+
   val indexedMove = changeLettersToIndex(move)
   if(indexedMove.length != 1)
     return (false, state(0))
@@ -73,7 +80,46 @@ def initializeEQueenBoard() = {
   }
   board
 }
-//////////////////////////////////////////////////////////////////////////////////////////////
+
+def solveEQueens(state: (Array[Array[Char]])): (Array[Array[Char]]) = {
+  val prologFile = new Query("consult('src/main/prolog/EQueensSolver.pl')")
+  if(!prologFile.hasSolution){
+    println("prolog file not found")
+    return state
+  }
+  val prologString = convertToPrologFormat(state)
+  val query = s"Qs = $prologString, n_queens(8, Qs), label(Qs)."
+  val prologResult = Query(query)
+  if(!prologResult.hasSolution) {
+    Dialog.showMessage(null, "Can't find solution", "Alert", Dialog.Message.Error)
+    return state
+  }
+
+  println("Solution found!")
+  val solution = prologResult.oneSolution().get("Qs")
+  updateBoardWithSolution(state, solution.toString)
+}
+def convertToPrologFormat(board: (Array[Array[Char]])): String = {
+  var z = Array(-1,-1,-1,-1,-1,-1,-1,-1)
+  board.zipWithIndex.foreach{
+    case (row, rowIndex) => row.zipWithIndex.foreach{
+    case (element, colIndex) => if(element == 'Q') z(colIndex) = rowIndex+1}}
+ var s = "["
+  z.foreach(index => if(index == -1)s = s + "_, "
+  else s = s + s"$index, ")
+  s = s.substring(0, s.length - 2)
+  s = s + "]"
+  s
+}
+
+def updateBoardWithSolution(state: Array[Array[Char]], inputString: String): Array[Array[Char]] = {
+  val cleanString = inputString.replace("[", "")
+    .replace("]", "").replace(" ", "")
+  val array = cleanString.split(",")
+  array.zipWithIndex.foreach{case (rowIndex,colIndex) => state(rowIndex.toInt - 1)(colIndex) = 'Q'}
+
+  state
+}
 
 def getPieceImage(): Image = {
 //  val colorString = if (isWhite) "white" else "black"
@@ -110,6 +156,7 @@ def drawGUIEQueen(board: Array[Array[Char]]): Unit = {
       }
     }
   }
+<<<<<<< HEAD
   val rowLabels = new GridPanel(8, 1) {
     preferredSize = new Dimension(17, 512)
     for (i <- 0 until 8) {
@@ -122,6 +169,8 @@ def drawGUIEQueen(board: Array[Array[Char]]): Unit = {
       contents += new Label(letters(j))
     }
   }
+=======
+>>>>>>> c8ee8b3 (Fix GUI not loading)
 
   val frame = new MainFrame {
     title = "Chess Board"
