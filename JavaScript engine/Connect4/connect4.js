@@ -43,7 +43,7 @@ class Connect4Engine extends Engine{
         this.drawer = new Connect4Drawer(this.board, this.boardCSS);
     }
     initializeCssBoard(){
-        let cell = new Cell( "#ffffff", 100, 100, 90, "circle")
+        let cell = new Cell( "#ffffff", 100, 100, 70, "circle")
         document.getElementById('board').style.width = 600 + 'px'
         document.getElementById('board').style.height = 600 + 'px'
         for(let i= 0;i<this.dimx;i++)
