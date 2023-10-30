@@ -1,7 +1,9 @@
 # Board Game Engine 📌 
 Welcome to the Board Game Engine project! This versatile engine is designed to streamline the development of board games, including classics like chess and checkers.
 With two distinct versions. One based on Object-Oriented Programming (OOP) principles using Javascript, Html, and CSS. 
-The other is based on Functional Programming (FP) principles using Scala.
+The other is based on Functional Programming (FP) principles using Scala.    
+This app also features a special Prolog solver for Suduko and 8 Queens!
+
 ## How to build using the OOP version 📌
 ### Project Structure
 The OOP version of the Board Game Engine is composed of three main modules:
