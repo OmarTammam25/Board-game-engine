@@ -1,8 +1,8 @@
-# Board Game Engine 
+# Board Game Engine 📌 
 Welcome to the Board Game Engine project! This versatile engine is designed to streamline the development of board games, including classics like chess and checkers.
 With two distinct versions. One based on Object-Oriented Programming (OOP) principles using Javascript, Html, and CSS. 
 The other is based on Functional Programming (FP) principles using Scala.
-## How to build using the OOP version
+## How to build using the OOP version 📌
 ### Project Structure
 The OOP version of the Board Game Engine is composed of three main modules:
 
@@ -30,4 +30,22 @@ In your-game.js implement the following:
 That's it! 
 The Board Game Engine will handle the rendering of the board based on your CSS and provide a framework for managing the game state. 
 Customize the game logic and rules to create your own board game, following the guidelines provided by the engine's architecture.
+
+## How to Build Using the Functional Version 📌
+To create a game using the functional version of the Board Game Engine, follow these simple steps:   
+
+1. **create Your Game Controller Function:**   
+This function should handle player movements, validate them, and change the game state according to your game's rules.
+
+2. **Create Your Game Drawer Function:**   
+This function is responsible for defining the game board's appearance.
+
+3. **Pass Controller and Drawer Functions:**   
+Instantiate the game engine, passing your controller and drawer functions as arguments.   
+
+
+That's it! 
+The Board Game Engine will handle the rendering of the board based on your Drawer function and provide a framework for managing the game state. 
+Customize the game logic and rules to create your own board game, following the guidelines provided by the engine's architecture.
+
 
