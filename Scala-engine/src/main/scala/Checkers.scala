@@ -7,32 +7,6 @@ import javax.imageio.ImageIO
 import scala.swing.Action.NoAction.title
 import scala.swing.{BorderPanel, Color, Dimension, Graphics2D, GridPanel, Image, Label, MainFrame}
 
-//@main
-//def main(): Unit = {
-//  println("Hello world!")
-//  abstractEngine(8, 8, 2, "checkers", checkersController, drawGUICheckers, initializeCheckersBoard)
-//}
-//
-//
-//def abstractEngine(dimx: Int, dimy: Int, numOfPlayers: Int, game: String,
-//                   controller: (String, (Array[Array[String]], Int)) => (Boolean, Array[Array[String]]),
-//                   drawer: Array[Array[String]] => Unit,
-//                   initBoard: () => Array[Array[String]]) =
-//{
-//  var state = (initBoard(), 0);
-//  drawer(state(0))
-//
-//  while(true) {
-//    val input = scala.io.StdIn.readLine()
-//    val currentState: (Boolean, Array[Array[String]]) = controller(input, state)
-//    if(currentState(0) == true) {
-//      state = (currentState(1), (state(1)+1) % numOfPlayers)
-//      drawer(state(0))
-//    } else
-//      println("Invalid move!")
-//  }
-//}
-
 def checkersController(move: String, state: (Array[Array[String]], Int)): (Boolean, Array[Array[String]]) =
 {
   val indexedMove = changeLettersToIndex(move)
@@ -125,22 +99,6 @@ def checkersDrawer(board: Array[Array[String]]): Unit = {
   }
 }
 
-
-def drawer(drawer: Unit): Unit = {
-  println("drawer")
-}
-
-def controller(game: String, move: String, state: (Array[Array[Int]], Int)): (Boolean, Array[Array[Int]]) = {
-  // change letters to digits
-  val indexedMove = move.split(' ').map(arr => arr.map(c => if(c.isLetter) c.toInt - 'a'.toInt else c))
-  println(indexedMove)
-  game match
-    case "chess" => println("chess controller called")
-    case _ => println("not a valid game")
-
-  (true, Array.ofDim(8, 8))
-}
-////////////////////////////////////////
 def drawGUICheckers(board: Array[Array[String]]): Unit = {
   val darkSquare = new Color(209, 139, 71)
   val lightSquare = new Color(255, 206, 158)
