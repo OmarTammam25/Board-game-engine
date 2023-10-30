@@ -50,4 +50,14 @@ That's it!
 The Board Game Engine will handle the rendering of the board based on your Drawer function and provide a framework for managing the game state. 
 Customize the game logic and rules to create your own board game, following the guidelines provided by the engine's architecture.
 
+## GUI Screenshots
+![image](https://github.com/OmarTammam25/Board-game-engine/assets/96181216/c9c35e77-fb5e-4003-bdf5-de2421ffcfe7)
+
+![image](https://github.com/OmarTammam25/Board-game-engine/assets/96181216/7c65c3b7-d9ed-4b62-8ee3-37cbf660c3f9)
+
+![image](https://github.com/OmarTammam25/Board-game-engine/assets/96181216/bd99aa67-55eb-47c1-a224-cd6f1dacab78)
+
+![image](https://github.com/OmarTammam25/Board-game-engine/assets/96181216/e2017e59-97f1-456e-a074-ba53ef5d3707)
+
+![image](https://github.com/OmarTammam25/Board-game-engine/assets/96181216/74931400-a9f1-4356-8099-19d79df9dc11)
 
